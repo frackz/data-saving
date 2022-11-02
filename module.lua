@@ -1,7 +1,5 @@
 local module = {}
 
-local Players = game:GetService("Players")
-
 local DataStoreName = "UserData"
 
 local DataStoreService = game:GetService("DataStoreService")
@@ -12,7 +10,7 @@ local Funcs = {
 	['Removed'] = {}
 }
 
-Players.PlayerAdded:Connect(function(Player)
+function module:PlayerAdded(Player)
 	local Handler = {}
 	Handler.New = function(
 		name : string,
@@ -25,33 +23,33 @@ Players.PlayerAdded:Connect(function(Player)
 		NewInstance.Value = value
 		return NewInstance
 	end
-	
+
 	local Success, Data = pcall(function()
 		return DataStore:GetAsync(Player.UserId)
 	end)
-	
+
 	if not Success then warn(Data) Data = {} end
 	if Data == nil then Data = {} end
 	for i,v in pairs(Funcs.Added) do
 		v(Player, Data, Handler)
 	end
-end)
+end
 
-Players.PlayerRemoving:Connect(function(Player)
+function module:PlayerRemoving(Player)
 	local Data = {}
 	local Set = function(key,val) Data[key] = val end
-	
+
 	for i,v in pairs(Funcs.Removed) do
 		v(Player, Set)
 	end
-	
+
 	local Success, Error = pcall(function()
 		DataStore:SetAsync(Player.UserId, Data)
 	end)
 	if not Success then
 		return warn(Error)
 	end
-end)
+end
 
 module.Added = function(func)
 	table.insert(Funcs.Added, func)
