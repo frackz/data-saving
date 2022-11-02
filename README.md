@@ -6,7 +6,7 @@ This works by - using the module script, you can add a function that will run wh
 ```lua
 local Data = require(script.Parent.module)
 Data.Added(function(Player, Data, Handler)
-  print("Player "..Player.Name.." joined with data "..Data..")
+  print("Player "..Player.Name.." joined with data "..Data)
   local Cash = Handler.New(
   'Cash', -- Name
   Player, -- Path
