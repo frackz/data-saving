@@ -11,7 +11,7 @@ Data.Added(function(Player, Data, Handler)
   'Cash', -- Name
   Player, -- Path
   'IntValue', -- Type (StringValue, IntValue for example)
-  true -- Value
+  0 -- Value
   )
   print("User now got a Cash value")
 
